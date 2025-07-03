@@ -14,7 +14,7 @@ const Home = ({ category, query }) => {
       setLoading(true);
       setError(null);
 
-      let url = `/api/news?category=${encodeURIComponent(category)}&query=${encodeURIComponent(query)}`;
+let url = `https://newshub-1-vl4q.onrender.com/api/news?category=${encodeURIComponent(category)}&query=${encodeURIComponent(query)}`;     
       try {
         const res = await fetch(url);
         if (!res.ok) {
