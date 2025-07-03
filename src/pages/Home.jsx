@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NewsList from '../components/NewsList';
 
-// NewsAPI key (keep secret in production)
-const API_KEY = '2ff0908b950945d3badd8b1bf468f159'; // Updated key from user
-const BASE_URL = 'https://newsapi.org/v2';
-
 /**
  * Fetches and renders news based on category or search query
  */
@@ -18,19 +14,8 @@ const Home = ({ category, query }) => {
       setLoading(true);
       setError(null);
 
-      let url = ''; // Build API endpoint dynamically
+      let url = `/api/news?category=${encodeURIComponent(category)}&query=${encodeURIComponent(query)}`;
       try {
-        if (query) {
-          // Search endpoint
-          url = `${BASE_URL}/everything?q=${encodeURIComponent(query)}&pageSize=10&language=en&apiKey=${API_KEY}`;
-        } else {
-          // Category endpoint
-          // For 'general' we omit topic param to get mixed headlines
-          url = category === 'international'
-            ? `${BASE_URL}/top-headlines?language=en&pageSize=10&apiKey=${API_KEY}`
-            : `${BASE_URL}/top-headlines?category=${category}&country=us&pageSize=10&apiKey=${API_KEY}`;
-        }
-
         const res = await fetch(url);
         if (!res.ok) {
           // Try to extract error message from API response
